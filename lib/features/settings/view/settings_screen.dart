@@ -9,11 +9,11 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton.filledTonal(
-              onPressed: () => context.pop(),
-              icon: const Icon(Iconsax.arrow_left_2)),
+              onPressed: () => context.pop(), icon: Icon(Iconsax.arrow_left_2)),
           title: const Text('Settings'),
           forceMaterialTransparency: true,
         ),
@@ -21,80 +21,74 @@ class SettingsScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ListView(
             children: [
-              // 🟦 Account Section (Blue)
               SettingsSection(
                   title: 'Account',
-                  titleColor: Colors.blue,
+                  titleColor: colorScheme.primary,
                   onTap: () {},
                   items: [
                     SettingsItem(
-                      icon: const Icon(Iconsax.user, color: Colors.blue),
-                      iconColor: Colors.blue,
+                      icon: Icon(Iconsax.user, color: colorScheme.primary),
+                      iconColor: colorScheme.primary,
                       title: 'Profile Settings',
                       description: 'AniList integration, account preferences',
                       onTap: () => context.push('/settings/account'),
                     ),
                   ]),
               const SizedBox(height: 10),
-
-              // 🟥 Content & Playback Section (Red)
               SettingsSection(
                   title: 'Content & Playback',
-                  titleColor: Colors.red,
+                  titleColor: colorScheme.primary,
                   onTap: () {},
                   items: [
                     SettingsItem(
-                      icon: const Icon(Icons.source_outlined,
-                          color: Colors.red),
-                      iconColor: Colors.red,
+                      icon: Icon(Icons.source_outlined,
+                          color: colorScheme.primary),
+                      iconColor: colorScheme.primary,
                       title: 'Anime Sources',
                       description: 'Manage anime content providers',
                       onTap: () => context.push('/settings/anime-sources'),
                     ),
                     SettingsItem(
-                      icon: const Icon(Iconsax.video_play, color: Colors.red),
-                      iconColor: Colors.red,
+                      icon:
+                          Icon(Iconsax.video_play, color: colorScheme.primary),
+                      iconColor: colorScheme.primary,
                       title: 'Video Player',
                       description: 'Manage video player settings',
                       onTap: () => context.push('/settings/player'),
                     ),
                   ]),
               const SizedBox(height: 10),
-
-              // 🟩 Appearance Section (Green)
               SettingsSection(
                   title: 'Appearance',
-                  titleColor: Colors.green,
+                  titleColor: colorScheme.primary,
                   onTap: () {},
                   items: [
                     SettingsItem(
-                      icon: const Icon(Iconsax.paintbucket,
-                          color: Colors.green),
-                      iconColor: Colors.green,
+                      icon:
+                          Icon(Iconsax.paintbucket, color: colorScheme.primary),
+                      iconColor: colorScheme.primary,
                       title: 'Theme Settings',
                       description: 'Customize app colors and appearance',
                       onTap: () => context.push('/settings/theme'),
                     ),
                     SettingsItem(
-                      icon: const Icon(Iconsax.mobile, color: Colors.green),
-                      iconColor: Colors.green,
+                      icon: Icon(Iconsax.mobile, color: colorScheme.primary),
+                      iconColor: colorScheme.primary,
                       title: 'UI Settings',
                       description: 'Customize the interface and layout',
                       onTap: () => context.push('/settings/ui'),
                     ),
                   ]),
               const SizedBox(height: 10),
-
-              // 🟧 Support Section (Orange)
               SettingsSection(
                   title: 'Support',
-                  titleColor: Colors.orange,
+                  titleColor: colorScheme.primary,
                   onTap: () {},
                   items: [
                     SettingsItem(
-                      icon: const Icon(Iconsax.info_circle,
-                          color: Colors.orange),
-                      iconColor: Colors.orange,
+                      icon:
+                          Icon(Iconsax.info_circle, color: colorScheme.primary),
+                      iconColor: colorScheme.primary,
                       title: 'About',
                       description: 'App information and licenses',
                       onTap: () => context.push('/settings/about'),

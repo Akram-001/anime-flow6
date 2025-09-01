@@ -67,7 +67,7 @@ class SettingsItem extends StatelessWidget {
     super.key,
     this.icon,
     this.iconColor,
-    required this.accent,
+    this.accent,
     required this.title,
     required this.description,
     this.leading,
