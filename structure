@@ -1,0 +1,19 @@
+lib/
+  ├── features/
+  │   ├── anime/
+  │   │   ├── data/
+  │   │   ├── domain/
+  │   │   └── presentation/
+  │   ├── settings/
+  │   │   ├── data/
+  │   │   ├── domain/
+  │   │   └── presentation/
+  │   └── player/
+  │       ├── data/
+  │       ├── domain/
+  │       └── presentation/
+  ├── core/
+  │   ├── utils/
+  │   ├── services/
+  │   └── widgets/
+  └── main.dart
