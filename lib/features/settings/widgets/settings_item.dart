@@ -62,7 +62,7 @@ class SettingsItem extends StatelessWidget {
     super.key,
     this.icon,
     this.iconColor,
-    this.accent, // ✅ صار إجباري
+    this.accent = Colors.blue
     required this.title,
     required this.description,
     this.leading,
