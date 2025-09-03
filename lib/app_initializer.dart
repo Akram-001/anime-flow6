@@ -36,10 +36,11 @@ class AppInitializer {
 
   static Future<void> _initializeMediaKit() async {
     try {
-      MediaKit.ensureInitialized();
+      await MediaKit.ensureInitialized(); // ✅ أضفنا await
       AppLogger.i("✅ MediaKit initialized.");
     } catch (e, st) {
       AppLogger.e("❌ MediaKit Initialization Error", e, st);
+      // ✅ حتى لو فشل، نكمل تشغيل التطبيق بدون كراش
     }
   }
 
@@ -60,16 +61,25 @@ class AppInitializer {
       Hive.registerAdapter(AnimeWatchProgressEntryAdapter());
       Hive.registerAdapter(EpisodeProgressAdapter());
 
-      await Future.wait([
-        Hive.openBox<ThemeModel>('theme_settings'),
-        Hive.openBox<SubtitleAppearanceModel>('subtitle_appearance'),
-        Hive.openBox<HomePageModel>('home_page'),
-        Hive.openBox<String>('selected_provider'),
-        Hive.openBox<UiModel>('ui_settings'),
-        Hive.openBox<ProviderSettings>('provider_settings'),
-        Hive.openBox<PlayerModel>('player_settings'),
-        Hive.openBox<AnimeWatchProgressEntry>('anime_watch_progress'),
-      ]);
+      // ✅ نحاول فتح الصناديق، ولو فشل أحدها ما نكراش
+      final boxNames = {
+        'theme_settings': ThemeModel,
+        'subtitle_appearance': SubtitleAppearanceModel,
+        'home_page': HomePageModel,
+        'selected_provider': String,
+        'ui_settings': UiModel,
+        'provider_settings': ProviderSettings,
+        'player_settings': PlayerModel,
+        'anime_watch_progress': AnimeWatchProgressEntry,
+      };
+
+      for (final entry in boxNames.entries) {
+        try {
+          await Hive.openBox(entry.key);
+        } catch (e, st) {
+          AppLogger.e("⚠️ Failed to open box: ${entry.key}", e, st);
+        }
+      }
 
       AppLogger.i("✅ Hive adapters registered and boxes opened.");
     } catch (e, st) {
@@ -78,7 +88,8 @@ class AppInitializer {
   }
 
   static Future<void> _initializeWindowManager() async {
-    if (!kIsWeb && !Platform.isAndroid && !Platform.isIOS) {
+    // ✅ هذا يشتغل فقط على سطح المكتب، مش الهاتف
+    if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
       try {
         await windowManager.ensureInitialized();
 
@@ -100,6 +111,7 @@ class AppInitializer {
         AppLogger.e("❌ Window Manager Initialization Error", e, st);
       }
     } else {
+      // ✅ للأندرويد و iOS فقط
       await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       await SystemChrome.setPreferredOrientations([]);
       SystemChrome.setSystemUIOverlayStyle(
